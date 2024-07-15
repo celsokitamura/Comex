@@ -16,7 +16,7 @@ namespace Comex.Funcionalidades
         {
             base.Executar(produtos);
             ExibirTitulo();
-            Console.WriteLine("Digite o Nome do produto");
+            /*Console.WriteLine("Digite o Nome do produto");
             string nomeProduto = Console.ReadLine()!;
             Console.WriteLine("Digite o Preço do produto");
             decimal precoProduto = decimal.Parse(Console.ReadLine()!);
@@ -26,7 +26,7 @@ namespace Comex.Funcionalidades
             Console.WriteLine($"Produto {nomeProduto} cadastrado com sucesso.");
             Console.WriteLine("Digite uma tecla para voltar ao menu principal");
             Console.ReadKey();
-            Console.Clear();
+            Console.Clear();*/
 
         }
     }
