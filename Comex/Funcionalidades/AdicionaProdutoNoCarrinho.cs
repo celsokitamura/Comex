@@ -12,7 +12,7 @@ namespace Comex.Funcionalidades
         public AdicionaProdutoNoCarrinho(string titulo) : base(titulo)
         { }
 
-        public override void Executar(Dictionary<string, Cliente> clientes, Dictionary<string, Produto> produtos, Dictionary<string, Carrinho> carrinhos)
+        public override void Executar(Dictionary<string, Cliente> clientes, Dictionary<string, Produto> produtos, Dictionary<string, Carrinho> carrinhos, int[] estoque)
         {
             base.Executar();
             ExibirTitulo();
@@ -44,8 +44,30 @@ namespace Comex.Funcionalidades
                 }
                 if (produtoComprado != null)
                 {
-                    carrinho.Produtos.Add(produtoComprado);
-                    Console.WriteLine("Produto adicionado com sucasso no carrinho.");
+                    Console.WriteLine("Digite a quantidade que deseja adicionar ao carrinho: ");
+
+                    int quantidadeDesejada;
+
+                    if(!int.TryParse(Console.ReadLine(), out quantidadeDesejada) || quantidadeDesejada <= 0)
+                    {
+                        Console.WriteLine("Quantidade inválida.");
+                        return;
+                    }
+
+                    int indiceProduto = Array.IndexOf(produtos.Keys.ToArray(), nomeProduto);
+
+                    if (estoque[indiceProduto] < quantidadeDesejada)
+                    {
+                        Console.WriteLine($"Quantidade insuficiente no estoque. Disponíveis: {estoque[indiceProduto]}");
+                    }
+                    else
+                    {
+                        estoque[indiceProduto] -= quantidadeDesejada;
+                        produtoComprado.Quantidade = quantidadeDesejada;
+                        carrinho.Produtos.Add(produtoComprado);
+                        carrinhos.Add(carrinho.Cliente.Nome, carrinho);
+                        Console.WriteLine($"{quantidadeDesejada} unidade(s) de {nomeProduto} adicionada(s) ao carrinho.");
+                    }
                 }
                 else
                 {

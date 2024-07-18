@@ -29,7 +29,15 @@ namespace Comex.Funcionalidades
         {
             Console.Clear();
         }
-        public virtual void Executar(Dictionary<string, Cliente> clientes, Dictionary<string, Produto> produtos, Dictionary<string, Carrinho> carrinhos)
+        public virtual void Executar(Dictionary<string, Cliente> clientes, Dictionary<string, Produto> produtos, Dictionary<string, Carrinho> carrinhos, int[] estoque)
+        {
+            Console.Clear();
+        }
+        public virtual void Executar(int[] estoque, Dictionary<string, Produto> produtos)
+        {
+            Console.Clear();
+        }
+        public virtual void Executar(List<string> categorias, int[,] vendasPorCategoria)
         {
             Console.Clear();
         }

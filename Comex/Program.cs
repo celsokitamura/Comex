@@ -11,6 +11,8 @@ funcionalidades.Add(3, new CadastraProduto("Cadastrar Produto"));
 funcionalidades.Add(4, new ConsultaProduto("Listar Produto por Categoria"));
 funcionalidades.Add(5, new AjustaPrecoDeProduto("Ajustar Preço do Produto"));
 funcionalidades.Add(6, new AdicionaProdutoNoCarrinho("Adicionar produto no carrinho"));
+funcionalidades.Add(7, new GerenciaEstoque("Gerenciar Estoque"));
+funcionalidades.Add(8, new GerarRelatorioDeVendasPorCategoria("Gerar Relatório de Vendas por Categoria"));
 funcionalidades.Add(-1, new Sair("Sair"));
 
 
@@ -18,7 +20,23 @@ Dictionary<string, Cliente> clientes = new();
 Dictionary<string, Produto> produtos = new();
 Dictionary<string, Carrinho> carrinhos = new();
 
-using(HttpClient client = new HttpClient())
+int[] estoque = null;
+
+List<string> categorias = new List<string> { "men's clothing", "jewelery", "electronics", "women's clothing" };
+
+int[,] vendasPorCategoria = new int[4, 2];
+//Dados fictícios para simplificação
+vendasPorCategoria[0, 0] = 100;
+vendasPorCategoria[0, 1] = 50000;
+vendasPorCategoria[1, 0] = 200;
+vendasPorCategoria[1, 1] = 30000;
+vendasPorCategoria[2, 0] = 150;
+vendasPorCategoria[2, 1] = 15000;
+vendasPorCategoria[3, 0] = 355;
+vendasPorCategoria[3, 1] = 55007;
+
+
+using (HttpClient client = new HttpClient())
 {
     try
     {
@@ -29,6 +47,8 @@ using(HttpClient client = new HttpClient())
         {
             produtos.Add(item.Nome.Trim(), new Produto(item.Id, item.Nome.Trim(), item.Preco, item.Descricao, item.Categoria));
         }
+        //INicializa o estoque com base na quantidade de produtos
+        estoque = new int[produtos.Count];
     }
     catch(Exception ex)
     {
@@ -47,6 +67,8 @@ void ExibirMenuDeOpcoes()
     Console.WriteLine("Digite 4 para Listar Produto por Categoria");
     Console.WriteLine("Digite 5 para Ajustar o Preço de um produto");
     Console.WriteLine("Digite 6 para Adicionar produto no carrinho");
+    Console.WriteLine("Digite 7 para Gerenciar o estoque");
+    Console.WriteLine("Digite 8 para Gerar Relatório de Vendas por Categoria");
     Console.WriteLine("Digite -1 pra sair");
 
     Console.WriteLine("\nDigite a sua opção: ");
@@ -69,7 +91,13 @@ void ExibirMenuDeOpcoes()
                 menuASerExibido.Executar(produtos);
                 break;
             case 6:
-                menuASerExibido.Executar(clientes, produtos, carrinhos);
+                menuASerExibido.Executar(clientes, produtos, carrinhos, estoque);
+                break;
+            case 7:
+                menuASerExibido.Executar(estoque, produtos);
+                break;
+            case 8:
+                menuASerExibido.Executar(categorias, vendasPorCategoria);
                 break;
             default:
                 menuASerExibido.Executar();
