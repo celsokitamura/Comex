@@ -13,6 +13,8 @@ funcionalidades.Add(5, new AjustaPrecoDeProduto("Ajustar Preço do Produto"));
 funcionalidades.Add(6, new AdicionaProdutoNoCarrinho("Adicionar produto no carrinho"));
 funcionalidades.Add(7, new GerenciaEstoque("Gerenciar Estoque"));
 funcionalidades.Add(8, new GerarRelatorioDeVendasPorCategoria("Gerar Relatório de Vendas por Categoria"));
+funcionalidades.Add(9, new SalvarListaDeProdutos("Salvar Lista de Produtos"));
+funcionalidades.Add(10, new CarregarListaDeProdutos("Carregar Lista de Produtos"));
 funcionalidades.Add(-1, new Sair("Sair"));
 
 
@@ -69,6 +71,8 @@ void ExibirMenuDeOpcoes()
     Console.WriteLine("Digite 6 para Adicionar produto no carrinho");
     Console.WriteLine("Digite 7 para Gerenciar o estoque");
     Console.WriteLine("Digite 8 para Gerar Relatório de Vendas por Categoria");
+    Console.WriteLine("Digite 9 para Salvar Lista de Produtos");
+    Console.WriteLine("Digite 10 para Carregar Lista de Produtos");
     Console.WriteLine("Digite -1 pra sair");
 
     Console.WriteLine("\nDigite a sua opção: ");
@@ -88,6 +92,8 @@ void ExibirMenuDeOpcoes()
             case 3:
             case 4:
             case 5:
+            case 9:
+            case 10:
                 menuASerExibido.Executar(produtos);
                 break;
             case 6:
