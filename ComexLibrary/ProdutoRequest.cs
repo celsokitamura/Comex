@@ -3,7 +3,7 @@
     /// <summary>
     /// Representa um produto na biblioteca Comex.
     /// </summary>
-    public class Produto
+    public class ProdutoRequest
     {
         /// <summary>
         /// Obtém ou define o identificador do produto
@@ -28,16 +28,7 @@
         /// <summary>
         /// Obtém ou define a categoria do produto
         /// </summary>
-        public Categoria Categoria { get; set; }
+        public int IdCategoria { get; set; }
 
-        /// <summary>
-        /// Calcula o preço com desconto
-        /// </summary>
-        /// <param name="percentualDesconto">O percentual de desconto a ser aplicado</param>
-        /// <returns>O preço do produto com o desconto aplicado</returns>
-        public decimal CalcularPrecoComDesconto(decimal percentualDesconto)
-        {
-            return Preco - (Preco * percentualDesconto / 100);
-        }
     }
 }
