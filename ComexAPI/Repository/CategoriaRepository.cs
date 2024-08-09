@@ -26,8 +26,8 @@ namespace ComexAPI.Repository
                     {
                         retorno.Add(new Categoria
                         {
-                            IdCategoria = int.Parse(reader["id_categoria"].ToString()),
-                            DsCategoria = reader["ds_categoria"].ToString()
+                            id_categoria = int.Parse(reader["id_categoria"].ToString()),
+                            ds_categoria = reader["ds_categoria"].ToString()
                         });
                     }
 
@@ -54,8 +54,8 @@ namespace ComexAPI.Repository
                     {
                         return new Categoria
                         {
-                            IdCategoria = int.Parse(reader["id_categoria"].ToString()),
-                            DsCategoria = reader["ds_categoria"].ToString()
+                            id_categoria = int.Parse(reader["id_categoria"].ToString()),
+                            ds_categoria = reader["ds_categoria"].ToString()
                         };
                     }
                     else
@@ -77,7 +77,7 @@ namespace ComexAPI.Repository
                 using (SqlCommand command = new SqlCommand("P_INCLUI_CATEGORIA", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@ds_categoria", categoria.DsCategoria);
+                    command.Parameters.AddWithValue("@ds_categoria", categoria.ds_categoria);
 
                     // Executando a Stored Procedure
                     command.ExecuteNonQuery();
@@ -95,8 +95,8 @@ namespace ComexAPI.Repository
                 using (SqlCommand command = new SqlCommand("P_ALTERA_CATEGORIA", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@id_categoria", categoria.IdCategoria);
-                    command.Parameters.AddWithValue("@ds_categoria", categoria.DsCategoria);
+                    command.Parameters.AddWithValue("@id_categoria", categoria.id_categoria);
+                    command.Parameters.AddWithValue("@ds_categoria", categoria.ds_categoria);
 
                     // Executando a Stored Procedure
                     command.ExecuteNonQuery();

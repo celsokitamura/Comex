@@ -1,4 +1,7 @@
-﻿using ComexAPI.Repository;
+﻿using AutoMapper;
+using ComexAPI.Data;
+using ComexAPI.Data.Dtos;
+using ComexAPI.Repository;
 using ComexLibrary;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -10,34 +13,66 @@ namespace ComexAPI.Controllers
     [Route("[controller]")]
     public class CategoriaController : ControllerBase
     {
-        public CategoriaController() { }
+        private ComexContext _context;
+        private IMapper _mapper;
+
+        public CategoriaController(ComexContext context, IMapper mapper) 
+        {
+            _context = context;
+            _mapper = mapper;
+        }
 
         CategoriaRepository categoriaRepository = new CategoriaRepository();
 
         [HttpGet(Name = "GetCategoria")]
-        public IEnumerable<Categoria> Get()
+        public IEnumerable<ReadCategoriaDto> Get()
         {
-            return categoriaRepository.ListaCategoria();
+            return _mapper.Map<List<ReadCategoriaDto>>(_context.Categoria);
         }
 
         [HttpPost(Name = "IncluiCategoria")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public void Inclui([FromBody] Categoria categoria)
+        public IActionResult Inclui([FromBody] CreateCategoriaDto categoriaDto)
         {
-            categoriaRepository.IncluiCategoria(categoria);
+            Categoria categoria = _mapper.Map<Categoria>(categoriaDto);
+            _context.Categoria.Add(categoria);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(RecuperaCategoriaPorId),
+                new { id = categoria.id_categoria },
+                categoria);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult RecuperaCategoriaPorId(int id)
+        {
+            var categoria = _context.Categoria
+                .FirstOrDefault(categoria => categoria.id_categoria == id);
+            if (categoria == null) return NotFound();
+            var categoriaDto = _mapper.Map<ReadCategoriaDto>(categoria);
+            return Ok(categoriaDto);
         }
 
         [HttpPut(Name = "AlteraCategoria")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
-        public void Altera([FromBody] Categoria categoria)
+        public IActionResult Altera([FromBody] UpdateCategoriaDto categoriaDto)
         {
-            categoriaRepository.AlteraCategoria(categoria);
+            Categoria categoria = _mapper.Map<Categoria>(categoriaDto);
+            _context.Categoria.Update(categoria);
+            _context.SaveChanges();
+            return AcceptedAtAction(nameof(RecuperaCategoriaPorId),
+                new { id = categoria.id_categoria },
+                categoria);
         }
 
         [HttpDelete(Name = "ExcluiCategoria{id}")]
-        public void Exclui(int id)
+        public IActionResult Exclui(int id)
         {
-            categoriaRepository.ExcluiCategoria(id);
+            var categoria = _context.Categoria.FirstOrDefault(
+                categoria => categoria.id_categoria == id);
+            if (categoria == null) return NotFound();
+            _context.Remove(categoria);
+            _context.SaveChanges();
+            return NoContent();
         }
     }
 }
