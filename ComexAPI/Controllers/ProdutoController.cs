@@ -35,11 +35,11 @@ namespace ComexAPI.Controllers
                     {
                         retorno.Add(new Produto
                         {
-                            Id = int.Parse(reader["id_produto"].ToString()),
-                            Nome = reader["nm_produto"].ToString(),
-                            Preco = decimal.Parse(reader["vl_preco"].ToString()),
-                            Descricao = reader["ds_descricao"].ToString(),
-                            Categoria = categoriaRepository.ObtemCategoriaPorId(int.Parse(reader["id_categoria"].ToString()))
+                            id_produto = int.Parse(reader["id_produto"].ToString()),
+                            nm_produto = reader["nm_produto"].ToString(),
+                            vl_preco = decimal.Parse(reader["vl_preco"].ToString()),
+                            ds_descricao = reader["ds_descricao"].ToString(),
+                            id_categoria = int.Parse(reader["id_categoria"].ToString())
                         });
                     }
 

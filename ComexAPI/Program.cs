@@ -1,4 +1,13 @@
+using ComexAPI.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("ComexConnection");
+
+builder.Services.AddDbContext<ComexContext>(opts => opts.UseSqlServer(connectionString));
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Add services to the container.
 
